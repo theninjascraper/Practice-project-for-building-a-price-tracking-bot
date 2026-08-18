@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Product - FakeShop</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="container">
+
+        <h1 class="logo">FakeShop</h1>
+
+        <nav>
+            <a href="index.html">Home</a>
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <section id="product-details">
+
+        Loading product...
+
+    </section>
+
+</main>
+
+
+<footer class="footer">
+
+    <p>FakeShop &copy; 2026</p>
+
+</footer>
+
+
+<script>
+
+fetch("products.json")
+    .then(response => response.json())
+    .then(products => {
+
+        const params = new URLSearchParams(window.location.search);
+
+        const productId = Number(params.get("id"));
+
+        const product = products.find(
+            item => item.id === productId
+        );
+
+        const container = document.getElementById("product-details");
+
+
+        if (!product) {
+
+            container.innerHTML = `
+                <h2>Product not found</h2>
+            `;
+
+            return;
+        }
+
+
+        container.innerHTML = `
+
+            <div class="product-card">
+
+                <h2 class="product-name">
+                    ${product.name}
+                </h2>
+
+                <p
+                    class="product-price"
+                    data-product-id="${product.id}"
+                >
+                    ৳${product.price.toLocaleString()}
+                </p>
+
+                <p>
+                    Product ID: ${product.id}
+                </p>
+
+                <p>
+                    Product Code: ${product.slug}
+                </p>
+
+                <br>
+
+                <a
+                    href="index.html"
+                    class="view-button"
+                >
+                    Back to Products
+                </a>
+
+            </div>
+
+        `;
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+        document.getElementById("product-details").innerHTML = `
+            <h2>Failed to load product</h2>
+        `;
+
+    });
+
+</script>
+
+</body>
+
+</html>
