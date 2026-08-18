@@ -11,12 +11,6 @@ fetch("products.json")
             card.classList.add("product-card");
 
             card.innerHTML = `
-                <img
-                    src="${product.image}"
-                    alt="${product.name}"
-                    class="product-image"
-                >
-
                 <h3 class="product-name">
                     ${product.name}
                 </h3>
@@ -29,9 +23,8 @@ fetch("products.json")
                 </p>
 
                 <a
-                    href="#"
+                    href="product.html?id=${product.id}"
                     class="view-button"
-                    data-product-id="${product.id}"
                 >
                     View Product
                 </a>
